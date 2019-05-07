@@ -6,4 +6,5 @@ result
 .vscode
 C++/build/
 C++/bin/
-CSAPP/*.out
+C++/CSAPP/*.out
+C++/log/
