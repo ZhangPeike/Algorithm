@@ -21,3 +21,6 @@ if len(sys.argv) == 1:
     assert IsValidEmail('bill.gates@microsoft.com')
     assert not IsValidEmail('bob#example.com')
     assert not IsValidEmail('mr-bob@example.com')
+    # print re.match(r'[a-zA-Z0-9]+', "abc9")
+    # print re.match(r'([a-zA-Z0-9]+){0,3}', "aaa000")
+    print re.match(r'[+-]?\d', "-9")

@@ -1,5 +1,7 @@
 #include "pk_hash.hpp"
+#include <deque>
 #include <iostream>
+#include <list>
 #include <unordered_map>
 #include <vector>
 class Solution {
@@ -70,8 +72,9 @@ public:
     return maxlen;
   };
 };
-
+int Hash(int k, int m) { return k % m; }
 int main(int argc, char **argv) {
+  std::cout << "Hello hash" << std::endl;
   std::unordered_map<int, int> my_map;
   std::vector<int> test_nums({2, 7, 9});
   Solution solution;
@@ -85,5 +88,36 @@ int main(int argc, char **argv) {
   int b = -1;
   std::cout << "\nstd::max(1, -1): " << std::max(a, b) << std::endl;
   std::cout << "std::max(0, -1): " << std::max(0, -1) << std::endl;
+  std::vector<std::list<int>> hash;
+  std::list<int> stl_list;
+  stl_list.assign(3, 5);
+  for (auto v : stl_list) {
+    std::cout << " " << v;
+  }
+  stl_list.insert(stl_list.begin(), 1);
+  std::cout << "Insert head with 1" << std::endl;
+  for (auto v : stl_list) {
+    std::cout << " " << v;
+  }
+  std::cout << std::endl;
+  int m = 11;
+  hash.resize(11);
+  hash[Hash(5, m)].insert(hash[Hash(5, m)].begin(), 5);
+  hash[Hash(1, m)].insert(hash[Hash(1, m)].begin(), 1);
+  hash[Hash(2, m)].insert(hash[Hash(2, m)].begin(), 2);
+  hash[Hash(9, m)].insert(hash[Hash(9, m)].begin(), 9);
+  hash[Hash(12, m)].insert(hash[Hash(12, m)].begin(), 12);
+  for (auto l : hash) {
+    if (l.empty()) {
+      std::cout << "******" << std::endl;
+    } else {
+      for (auto key : l) {
+        std::cout << key << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
+  auto res = (400 * 500) * (300 * 200);
+  std::cout << "(400 * 500) * (300 * 200): " << res << std::endl;
   return 0;
 }
