@@ -3,4 +3,4 @@ cd build
 cmake ..
 make
 cd ..
-./bin/child_sibling
+# ./bin/child_sibling

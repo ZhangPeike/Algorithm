@@ -37,17 +37,13 @@ long long GetCurrentMillisec() {
     time_now.time_since_epoch());
   return duration_in_ms.count();
 }
-void CurrentDateToString(std::string &time_str, bool is_format = false) {
+void CurrentDateToString(std::string &time_str) {
   time_t rawtime;
   struct tm *timeinfo;
   char buffer[30];
   time(&rawtime);
   timeinfo = localtime(&rawtime);
-  if (is_format) {
-    strftime(buffer, sizeof(buffer), "%Y/%m/%d %H:%M:%S", timeinfo);
-  } else {
-    strftime(buffer, sizeof(buffer), "%Y_%m_%d_%H_%M_%S", timeinfo);
-  }
+  strftime(buffer, sizeof(buffer), "%Y_%m_%d_%H_%M_%S", timeinfo);
   time_str.clear();
   time_str = std::string(buffer);
   return;

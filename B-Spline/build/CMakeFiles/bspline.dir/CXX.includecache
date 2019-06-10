@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zpk/programming/B-Spline/BSpline.cpp
+BSpline.hpp
+/home/zpk/programming/B-Spline/BSpline.hpp
+
+/home/zpk/programming/B-Spline/BSpline.hpp
+eigen3/Eigen/Core
+-
+eigen3/Eigen/Eigen
+-
+iostream
+-
+vector
+-
+

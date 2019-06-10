@@ -6,6 +6,16 @@
 #include <vector>
 class Solution {
 public:
+  int singleNumber(std::vector<int> &nums) {
+    std::unordered_map<int, int> hash_table;
+    for (int i = 0; i < nums.size(); i++) {
+      hash_table[nums[i]]++;
+    }
+    for (auto x : hash_table) {
+      x.second == 2;
+      return x.first;
+    }
+  };
   // TwoSum: find two elements so that their sum is target
   std::vector<int> GetIndex(const std::vector<int> &nums, const int target) {
     std::unordered_map<int, int> my_map;

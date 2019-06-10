@@ -67,7 +67,6 @@ def DrawImu(file_imu):
     plt.grid(True)
     plt.legend(loc="upper right")
     plt.title("Gyroscope reading")
-
     plt.show()
 
 
