@@ -23,4 +23,12 @@ if len(sys.argv) == 1:
     assert not IsValidEmail('mr-bob@example.com')
     # print re.match(r'[a-zA-Z0-9]+', "abc9")
     # print re.match(r'([a-zA-Z0-9]+){0,3}', "aaa000")
-    print re.match(r'[+-]?\d', "-9")
+    # print re.match(r'[+-]?\d', "-9")
+    messed_date = "201.906.30"
+    date = re.findall(r"\d", messed_date)
+    print date
+    data_str = ""
+    for num in date:
+        if len(num) > 0:
+            data_str = data_str+num
+    print data_str

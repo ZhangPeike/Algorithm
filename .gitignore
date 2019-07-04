@@ -7,4 +7,5 @@ result
 C++/build/
 C++/bin/
 C++/CSAPP/*.out
+C++/grammer/*.out
 C++/log/
