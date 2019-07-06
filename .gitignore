@@ -2,6 +2,7 @@ __pycache__
 *.txt
 *.pyc
 *.swp
+*.out
 result
 .vscode
 C++/build/
