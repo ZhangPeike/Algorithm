@@ -1,4 +1,4 @@
-// #include "Log/log.hpp"
+#include <cstddef>
 #include <iostream>
 // TODO: 1. 实现BST 2.实现BST的前中后遍历 3. 实现非递归的遍历，提示利用栈
 // TODO: 2. 智能指针
@@ -20,11 +20,15 @@ template <typename T> struct Node {
   T data_;
 };
 
+enum Color { Black, Red };
+
+template <typename T> struct RBNode : public Node<T> { Color color_; };
+
 template <typename T> class BinarySearchTree {
 public:
   void Insert(T data) { HelpInsert(root_, data); }
   void Delete() {}
-  Node<T> *Search(T data) { return SearchValue(root, data, false); }
+  Node<T> *Search(T data) { return SearchValue(root_, data, false); }
   void InOrderTreeWalk() { HelpInOrderTreeWalk(root_); }
   T Maximum() {
     auto x = HelpMaximum(root_);
@@ -132,7 +136,7 @@ private:
         return x;
       } else if (k < x->data_) {
         return SearchValue(x->left_, k, true);
-      } else if (k > x - data_) {
+      } else if (k > x->data_) {
         return SearchValue(x->right_, k, true);
       }
     } else {
@@ -167,7 +171,6 @@ private:
       y->right_ = z;
     }
   }
-  // TODO
   void HelpTransplant(Node<T> *root, Node<T> *u, Node<T> *v) {
     if (u->parent_ == nullptr) {
       root = v;
@@ -199,9 +202,3 @@ private:
     }
   }
 };
-
-int main() {
-  std::cout << "Constructing a BST tree..." << std::endl;
-  // zpk::LogInit();
-  return 0;
-}

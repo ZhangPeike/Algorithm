@@ -26,6 +26,7 @@ private:
   // 代理类: std::vector<bool>::reference
   std::vector<bool> vec_bool_{true, false};
   //   static int cnt_ = 0;
+  std::string str_;
 
 public:
   // decltype(auto) VecBool() { return std::forward<std::vector<bool>>(vec_bool_[1]);
@@ -55,7 +56,7 @@ public:
     memcpy(data_, other.data_, other.length_);
     return *this;
   }
-  Widget(Widget &&other) : data_(nullptr), length_(0) {
+  Widget(Widget &&other) : str_(std::move(other.str_)), data_(nullptr), length_(0) {
     data_ = other.data_;
     length_ = other.length_;
     other.data_ = nullptr;
@@ -114,30 +115,31 @@ int main() {
   int n = 1;
   // bad
   std::cout << "type: " << typeid(n).name() << std::endl;
-  // Widget w1(9);
-  // vec_Widget.push_back(Widget(9));
+  Widget w1(9);
+  vec_Widget.push_back(Widget(9));
   Widget w = Widget(9);
   // Error result
   ProcessWidget(w.GetVecBool()[0]);
+  // vector<bool> 取出的元素还是bool吗
   auto Priority = w.GetVecBool()[0];
   ProcessWidget(Priority);
   // Error result
   auto PriorityNew = static_cast<bool>(w.GetVecBool()[0]);
   ProcessWidget(PriorityNew);
-  // Widget w2(10);
-  // vec_Widget.push_back(std::move(w2));
-  // Widget w3(11);
-  // std::cout << "look at =" << std::endl;
-  // Widget w4;
-  // w4 = Widget(12);
+  Widget w2(10);
+  vec_Widget.push_back(std::move(w2));
+  Widget w3(11);
+  Widget w4;
+  w4 = Widget(12);
   // emplace_back is amazing
-  // vec_Widget.emplace_back(std::move(w3));
+  vec_Widget.emplace_back(std::move(w3));
   int vals[] = {1, 2, 3, 4, 5, 6, 7};
   std::array<int, ArraySize(vals)> mapped_vals;
   std::cout << "size: " << mapped_vals.size() << std::endl;
   auto x1 = 29;
   auto x2(29);
   auto x3{29};
+  // x4的型别是什么？
   auto x4 = {29};
   return 0;
 }

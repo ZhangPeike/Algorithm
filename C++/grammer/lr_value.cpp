@@ -61,10 +61,10 @@ int main() {
   b = 9;
   swapr(a, b);
   std::cout << "Result,a: " << a << "b:" << b << std::endl;
-  std::cout << "Using ref to swap" << std::endl;
   a = 0;
   b = 9;
   swapv(a, b);
+  std::cout << "Using value to swap" << std::endl;
   std::cout << "Result,a: " << a << "b:" << b << std::endl;
   std::cout << "------" << std::endl;
   AB x(1, 9);
