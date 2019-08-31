@@ -3,19 +3,20 @@ import numpy as np
 
 
 # make index start from 0
-def SolveCoefficients4NaturalCubicSpline(list_float_x, list_float_y):
-    n = len(list_float_x)
-    if n != len(list_float_y):
+def SolveCoefficients4NaturalCubicSpline(list_x, list_y):
+    n = len(list_x)
+    if n != len(list_y):
         # TODO: handle error
         return
     if n < 2:
         return
     # TODO: check grammer
-    a = [list_float_y[i] for i in range(n - 1)]
-    a = np.asarray(a)
+    a = [list_y[i] for i in range(n - 1)]
+    a = np.asarray(a, dtype=np.float64)
     a.shape = (n - 1, 1)
-    epsilon = [list_float_x[i + 1] - list_float_x[i] for i in range(n - 1)]
-    delta = [list_float_y[i + 1] - list_float_y[i] for i in range(n - 1)]
+    epsilon = [float(list_x[i + 1]) - float(list_x[i]) for i in range(n - 1)]
+    # epsilon = [list_x[i + 1] - list_x[i] for i in range(n - 1)]
+    delta = [list_y[i + 1] - list_y[i] for i in range(n - 1)]
     A = np.zeros((n, n), dtype=np.float64)
     A[0, 0] = 1.0
     A[n - 1, n - 1] = 1.0
