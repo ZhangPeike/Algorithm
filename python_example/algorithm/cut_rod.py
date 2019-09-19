@@ -4,6 +4,10 @@ import time
 import numpy as np
 
 
+def MatrixMultiply(A, B):
+    return np.dot(A, B)
+
+
 class DynamicProgramming(object):
     #c: a_cut_cost
     #p: price_list
@@ -14,14 +18,19 @@ class DynamicProgramming(object):
         self.s_ = [0 for i in range(n + 1)]
         self.r_bottom_up_ = [0 for i in range(n + 1)]
         self.p_ = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
-        # matrix chain multiply, the first 0 is no use.
+        # TODO:file matrices
+        self.mat_list_ = []
         self.mat_sz_ = [30, 35, 15, 5, 10, 20, 25]
         self.mat_num_ = len(self.mat_sz_) - 1
+        for i in range(self.mat_num_):
+            self.mat_list_.append(
+                np.random.randint(10,
+                                  size=(self.mat_sz_[i], self.mat_sz_[i + 1])))
         # be identical to the algo MatrixChainOrder
         self.mat_m_ = np.zeros((self.mat_num_ + 1, self.mat_num_ + 1),
-                               dtype=float)
+                               dtype=int)
         self.mat_s_ = np.zeros((self.mat_num_ + 1, self.mat_num_ + 1),
-                               dtype=float)
+                               dtype=int)
         self.cnt_recursive_ = 0
         self.cnt_dp_ = 0
         self.cnt_finbonacci_ = 0
@@ -126,7 +135,7 @@ class DynamicProgramming(object):
         for l in range(2, self.mat_num_ + 1):
             for i in range(1, self.mat_num_ - l + 2):
                 j = i + l - 1
-                self.mat_m_[i, j] = float('inf')
+                self.mat_m_[i, j] = 1e9
                 for k in range(i, j):
                     q = self.mat_m_[i, k] + self.mat_m_[
                         k + 1, j] + self.mat_sz_[
@@ -135,6 +144,35 @@ class DynamicProgramming(object):
                         self.mat_m_[i, j] = q
                         self.mat_s_[i, j] = k
         return self.mat_m_, self.mat_s_
+
+    # Understand the method
+    def PrintOptizeMatrixChainOrder(self, i, j):
+        if i == j:
+            print("A" + str(i))
+        else:
+            print("(")
+            self.PrintOptizeMatrixChainOrder(i, int(self.mat_s_[i, j]))
+            self.PrintOptizeMatrixChainOrder(int(self.mat_s_[i, j] + 1), j)
+            print(")")
+
+    def MatrixChainMultiply(self, s, i, j):
+        if i == s[i, j] and s[i, j] + 1 == j:
+            return MatrixMultiply(self.mat_list_[i - 1], self.mat_list_[j - 1])
+        elif i == s[i, j] and s[i, j] + 1 < j:
+            return MatrixMultiply(self.mat_list_[i - 1],
+                                  self.MatrixChainMultiply(s, s[i, j] + 1, j))
+        elif i < s[i, j] and s[i, j] + 1 == j:
+            return MatrixMultiply(self.MatrixChainMultiply(s, i, s[i, j]),
+                                  self.mat_list_[j - 1])
+        elif i < s[i, j] and s[i, j] + 1 < j:
+            return MatrixMultiply(self.MatrixChainMultiply(s, i, s[i, j]),
+                                  self.MatrixChainMultiply(s, s[i, j] + 1, j))
+
+    def OrdinaryMatrixChainMultiply(self):
+        a = np.dot(self.mat_list_[0], self.mat_list_[1])
+        for i in range(2, self.mat_num_):
+            a = np.dot(a, self.mat_list_[i])
+        return a
 
 
 if __name__ == "__main__":
@@ -160,3 +198,5 @@ if __name__ == "__main__":
     print(a)
     print("solution:")
     print(b)
+    print(dp.PrintOptizeMatrixChainOrder(1, 6))
+    print(dp.OrdinaryMatrixChainMultiply() - dp.MatrixChainMultiply(b, 1, 6))
