@@ -31,32 +31,50 @@ def OptimalBST(p, q, n):
 
 
 #Like middle-order
-#ERROR
-def ConstructOptimalBST(root, i, j, r_prime, root_flag):
-    if i >= root.shape[0] or j >= root.shape[0]:
-        return
-    r = root[i, j]
-    if root_flag:
+def ConstructOptimalBST(root, i, j):
+    if i == 1 and j == (root.shape[0] - 1):
+        r = root[i, j]
         print("k%d is the root" % r)
-        root_flag = False
-        ConstructOptimalBST(root, i, r - 1, r, root_flag)
-        ConstructOptimalBST(root, r + 1, j, r, root_flag)
-        # attention, return must be used.
-        return
-    if i > (j + 1):
-        return
-    elif i == (j + 1):
-        if j < r_prime:
-            print("d%d is the left child of k%d" % (i - 1, r))
-            print("d%d is the right child of k%d" % (i, r))
-        return
-    else:
-        if r < r_prime:
-            print("k%d is the left child of k%d" % (r, r_prime))
-        else:
-            print("k%d is the left child of k%d" % (r, r_prime))
-    ConstructOptimalBST(root, i, r - 1, r, root_flag)
-    ConstructOptimalBST(root, r + 1, j, r, root_flag)
+    if i < j:
+        r = root[i, j]
+        if r != i:
+            print("k%d is the left child of k%d" % (root[i, r - 1], r))
+        ConstructOptimalBST(root, i, r - 1)
+        if r != j:
+            print("k%d is the right child of k%d" % (root[r + 1, j], r))
+        ConstructOptimalBST(root, r + 1, j)
+    if i == j:
+        print("d%d is the left child of k%d" % (i - 1, i))
+        print("d%d is the right child of k%d" % (i, i))
+    if i > j:
+        print("d%d is the right child of k%d" % (j, j))
+
+
+#ERROR
+# if i >= root.shape[0] or j >= root.shape[0]:
+#     return
+# r = root[i, j]
+# if root_flag:
+#     print("k%d is the root" % r)
+#     root_flag = False
+#     ConstructOptimalBST(root, i, r - 1, r, root_flag)
+#     ConstructOptimalBST(root, r + 1, j, r, root_flag)
+#     # attention, return must be used.
+#     return
+# if i > (j + 1):
+#     return
+# elif i == (j + 1):
+#     if j < r_prime:
+#         print("d%d is the left child of k%d" % (i - 1, r))
+#         print("d%d is the right child of k%d" % (i, r))
+#     return
+# else:
+#     if r < r_prime:
+#         print("k%d is the left child of k%d" % (r, r_prime))
+#     else:
+#         print("k%d is the left child of k%d" % (r, r_prime))
+# ConstructOptimalBST(root, i, r - 1, r, root_flag)
+# ConstructOptimalBST(root, r + 1, j, r, root_flag)
 
 
 def main():
@@ -64,7 +82,11 @@ def main():
     p = [0, 0.15, 0.10, 0.05, 0.10, 0.20]
     q = [0.05, 0.10, 0.05, 0.05, 0.05, 0.10]
     _, root = OptimalBST(p, q, 5)
-    # ConstructOptimalBST(root, 1, 5, 0, True)
+    ConstructOptimalBST(
+        root,
+        1,
+        5,
+    )
 
 
 if __name__ == "__main__":
