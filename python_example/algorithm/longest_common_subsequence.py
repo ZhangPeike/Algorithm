@@ -13,7 +13,8 @@ class Ax(Enum):
     corner = 2
 
 
-def LCS_Length(X, Y):
+#return: B the result index, C the longest length.
+def LongestCommonSubsequence(X, Y):
     m = len(X)
     n = len(Y)
     B = np.zeros((m + 1, n + 1), Ax)
@@ -66,22 +67,42 @@ def LCS_Length_min_space(X, Y):
     return C[1, n]
 
 
-def PrintLCS(B, X, X_len, Y_len):
+def PrintLongestCommonSubsequence(B, X, X_len, Y_len):
     if X_len == 0 or Y_len == 0:
         return
     elif B[X_len, Y_len] == Ax.corner:
-        PrintLCS(B, X, X_len - 1, Y_len - 1)
+        PrintLongestCommonSubsequence(B, X, X_len - 1, Y_len - 1)
         print(X[X_len - 1])
     elif B[X_len, Y_len] == Ax.up:
-        PrintLCS(B, X, X_len - 1, Y_len)
+        PrintLongestCommonSubsequence(B, X, X_len - 1, Y_len)
     # elif B[X_len, Y_len] == Ax.left:
     else:
-        PrintLCS(B, X, X_len, Y_len - 1)
+        PrintLongestCommonSubsequence(B, X, X_len, Y_len - 1)
+
+
+#TODO: get the array of LCS
+# LCS = []
+
+
+def GetLongestCommonSubsequence(B, X, X_len, Y_len, LCS):
+    if X_len == 0 or Y_len == 0:
+        return
+    if B[X_len, Y_len] == Ax.corner:
+        GetLongestCommonSubsequence(B, X, X_len - 1, Y_len - 1, LCS)
+        LCS.append(X[X_len - 1])
+    elif B[X_len, Y_len] == Ax.up:
+        GetLongestCommonSubsequence(B, X, X_len - 1, Y_len, LCS)
+    else:
+        GetLongestCommonSubsequence(B, X, X_len, Y_len - 1, LCS)
 
 
 if __name__ == "__main__":
     X = ['A', 'B', 'C', 'B', 'D', 'A', 'B']
     Y = ['B', 'D', 'C', 'A', 'B', 'A']
-    B, _ = LCS_Length(X, Y)
-    PrintLCS(B, X, len(X), len(Y))
+    B, _ = LongestCommonSubsequence(X, Y)
+    lcs = []
+    GetLongestCommonSubsequence(B, X, len(X), len(Y), lcs)
+    print(lcs)
+    print("Compare with the printing method")
+    PrintLongestCommonSubsequence(B, X, len(X), len(Y))
     print("2 row method result LCS lenght: %d" % LCS_Length_min_space(X, Y))
