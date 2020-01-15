@@ -5,7 +5,7 @@ class Stairs():
     def Recursive(self, n):
         if n <= 2:
             return n
-        return self.Recursive(n - 1) + self.Recursive(n - 2) * 2
+        return self.Recursive(n - 1) + self.Recursive(n - 2)
 
     def DP(self, n):
         c = [-float('inf') for i in range(max(3, n + 1))]
@@ -17,7 +17,7 @@ class Stairs():
     def DPAux(self, n, c):
         if c[n] > 0:
             return c[n]
-        c[n] = self.DPAux(n - 1, c) + 2 * self.DPAux(n - 2, c)
+        c[n] = self.DPAux(n - 1, c) + self.DPAux(n - 2, c)
         return c[n]
 
 
